@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
-class UserAuthController extends Controller
+class AuthController extends Controller
 {
     public function login(Request $request)
     {
@@ -54,6 +54,11 @@ class UserAuthController extends Controller
         return response()->json([
             'message' => 'Successfully logged out'
         ]);
+    }
+
+    public function user(Request $request)
+    {
+        return response()->json($request->user());
     }
 
 }
