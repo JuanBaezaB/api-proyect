@@ -16,16 +16,15 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        if (!auth()->attempt($data)) {
+        if (auth()->attempt($data)) {
+            $token = auth()->user()->createToken('API Token')->accessToken;
+            return response([
+                'user' => auth()->user(),
+                'token' => $token
+            ]);
+        } else {
             return response(['error_message' => 'Usuario y/o constraseña invalido. Por favor, intente nuevamente.'], 401);
         }
-
-        $token = auth()->user()->createToken('API Token')->accessToken;
-
-        return response([
-            'user' => auth()->user(),
-            'token' => $token
-        ]);
     }
 
     public function register(Request $request)
